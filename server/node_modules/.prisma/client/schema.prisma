@@ -1,0 +1,75 @@
+datasource db {
+  provider = "mysql"
+  url      = env("PRM_DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model users {
+  id            Int      @id @unique @default(autoincrement())
+  email         String   @unique @db.Char(100)
+  email_confirm Boolean  @default(false)
+  user_name     String   @unique @db.Char(30)
+  first_name    String   @db.Char(30)
+  last_name     String   @db.Char(30)
+  password      String   @db.Char(255)
+  blocked       Boolean  @default(false)
+  avatar        String   @default("https://firebasestorage.googleapis.com/v0/b/learnfirebase-2c8f7.appspot.com/o/meostores%2Fusers%2Fno_avatar.jpg?alt=media&token=7d5afb5a-48a4-4575-92cb-7759073ad611")
+  role          Role     @default(USER)
+  create_at     DateTime @default(now())
+  update_at     DateTime @default(now())
+  carts         carts[]
+}
+
+model categories {
+  id       Int        @id @default(autoincrement())
+  title    String     @unique
+  status   Boolean    @default(false)
+  avatar   String     @default("category.png")
+  deleted  Boolean    @default(false)
+  products products[]
+}
+
+model products {
+  id               Int                @id @default(autoincrement())
+  name             String             @unique(map: "Products_name_key")
+  active           Boolean            @default(false)
+  des              String
+  category         categories         @relation(fields: [category_id], references: [id])
+  category_id      Int
+  cart_details     cart_details[]
+  price            Float
+  avatar           String             @default("https://firebasestorage.googleapis.com/v0/b/learnfirebase-2c8f7.appspot.com/o/db2ba0b3b0b32408778105d6be53a557_t.png?alt=media&token=fc4f08ac-a4fb-4998-874b-f997e29ee08e")
+  product_pictures product_pictures[]
+}
+
+model product_pictures {
+  id         Int      @id @default(autoincrement())
+  product    products @relation(fields: [product_id], references: [id])
+  product_id Int
+  url        String
+}
+
+model carts {
+  id           String         @id @default(uuid())
+  user         users          @relation(fields: [user_id], references: [id])
+  user_id      Int            @unique
+  cart_details cart_details[]
+}
+
+model cart_details {
+  id         Int      @id @default(autoincrement())
+  cart       carts    @relation(fields: [cart_id], references: [id])
+  cart_id    String
+  product    products @relation(fields: [product_id], references: [id])
+  product_id Int
+  quantity   Int
+  note       String
+}

@@ -1,0 +1,16 @@
+@import "../../styles/global.scss";
+
+.container {
+  padding-bottom: 60px;
+  padding-top: 70px;
+}
+
+@media (max-width: $media-md) {
+  .container {
+    padding-top: 30px;
+
+    p {
+      text-align: left;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirm</title>
+    <style>
+        .logo_img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            /* margin-left: 40%; */
+        }
+        .content {
+            /* margin-left: 30%; */
+        }
+        .btn {
+            background-color: rgb(49, 202, 248);
+            color: white;
+            font-weight: 900;
+            font-size: 16px;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            /* margin-left: 40%; */
+        }
+    </style>
+</head>
+<body>
+    <img class="logo_img" src="https://chungkhoantaichinh.vn/wp-content/uploads/2022/12/hinh-meo-cute-chibi-10.jpg">
+    <h1 class="content">JS_230410_CLIENT - Hello <%= user.first_name %> <%= user.last_name %></h1>
+    <p class="content">Vui lòng bấm vào liên kết bên dưới để xác thực tài khoản!</p>
+    <a href="http://localhost:4000/apis/v1/users/confirm/<%= token %>" class="content btn">Xác Nhận</a>
+</body>
+</html>
